@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Multilingual Landing Page</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b1220;
+            color: white;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+        }
+
+        .nav-links a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 8px;
+            background: #111827;
+            color: white;
+            border: 1px solid #334155;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #38bdf8;
+            cursor: pointer;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 60px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ABOUT */
+        .about {
+            padding: 60px;
+            text-align: center;
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="translatable"><b>BharatGen</b></div>
+
+        <div class="nav-links">
+            <a href="#" class="translatable">Home Page</a>
+            <a href="#" class="translatable">Features</a>
+            <a href="#" class="translatable">About</a>
+            <a href="#" class="translatable">Contact</a>
+        </div>
+
+        <select id="langSelect">
+            <option value="eng_Latn">English</option>
+            <option value="hin_Deva">Hindi</option>
+            <option value="ben_Beng">Bengali</option>
+            <option value="tam_Taml">Tamil</option>
+            <option value="tel_Telu">Telugu</option>
+            <option value="mar_Deva">Marathi</option>
+            <option value="guj_Gujr">Gujarati</option>
+            <option value="kan_Knda">Kannada</option>
+            <option value="mal_Mlym">Malayalam</option>
+            <option value="pan_Guru">Punjabi</option>
+            <option value="urd_Arab">Urdu</option>
+            <option value="npi_Deva">Nepali</option>
+        </select>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1 class="translatable">Build Multilingual Websites Instantly</h1>
+        <p class="translatable">
+            Convert any website into 22+ Indian languages using AI-powered translation API in real-time without reload.
+        </p>
+        <button class="btn translatable">Get Started</button>
+    </section>
+
+    <!-- CARDS -->
+    <section class="cards">
+        <div class="card">
+            <h3 class="translatable">Fast Translation</h3>
+            <p class="translatable">Translate content in milliseconds using GPU accelerated models.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="translatable">22 Indian Languages</h3>
+            <p class="translatable">Support for all major Indian languages including regional dialects.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="translatable">Easy Integration</h3>
+            <p class="translatable">Drop-in API for any website or application.</p>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about">
+        <h2 class="translatable">About This System</h2>
+        <p class="translatable">
+            This is a demonstration of a dynamic AI translation system using FastAPI backend and Indic language models.
+            It automatically updates UI text when user selects a language.
+        </p>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p class="translatable">© 2026 BharatGen AI. All rights reserved.</p>
+    </div>
+
+    <script>
+        const API_URL = "https://conflicts-employment-pairs-parent.trycloudflare.com/translate";
+
+        let nodes = [];
+        let originalTexts = [];
+
+        function cacheDOM() {
+            nodes = document.querySelectorAll(".translatable");
+            originalTexts = Array.from(nodes).map(n => n.innerText);
+        }
+
+        // batch translate
+        async function translateBatch(texts, lang) {
+            const formData = new FormData();
+            texts.forEach(t => formData.append("sentences", t));
+            formData.append("src_lang", "eng_Latn");
+            formData.append("tgt_lang", lang);
+
+            const res = await fetch(API_URL, { method: "POST", body: formData });
+            const data = await res.json();
+            return data.translations;
+        }
+
+        async function applyTranslation(lang) {
+            if (lang === "eng_Latn") {
+                nodes.forEach((n, i) => n.innerText = originalTexts[i]);
+                return;
+            }
+
+            const translated = await translateBatch(originalTexts, lang);
+
+            translated.forEach((t, i) => {
+                nodes[i].innerText = t;
+            });
+        }
+
+        document.getElementById("langSelect").addEventListener("change", (e) => {
+            applyTranslation(e.target.value);
+        });
+
+        cacheDOM();
+    </script>
+
+</body>
+
+</html>

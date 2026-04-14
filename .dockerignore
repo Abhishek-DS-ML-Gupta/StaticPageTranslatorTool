@@ -1,0 +1,12 @@
+.git
+__pycache__
+*.pt
+*.bin
+*.safetensors
+.cache
+venv
+env
+node_modules
+*.zip
+*.tar
+*.tar.gz
