@@ -193,6 +193,18 @@ tmux attach -t tunnel
 
 ---
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="assets/english.jpg" width="800"/>
+</p>
+
+<p align="center">
+  <img src="assets/hindi.jpg" width="800"/>
+</p>
+
+---
+
 # 🛠️ Docker Management
 
 ```bash id="v6qk4p"
