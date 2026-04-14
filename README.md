@@ -193,14 +193,14 @@ tmux attach -t tunnel
 
 ---
 
-## 📸 Screenshots
+## 📸 Output Screenshots
 
 <p align="center">
-  <img src="assets/english.jpg" width="800"/>
+  <img src="assets/english.png" width="800"/>
 </p>
 
 <p align="center">
-  <img src="assets/hindi.jpg" width="800"/>
+  <img src="assets/hindi.png" width="800"/>
 </p>
 
 ---
